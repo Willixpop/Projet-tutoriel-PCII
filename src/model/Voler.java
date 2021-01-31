@@ -20,6 +20,9 @@ public class Voler extends Thread{
 	@Override
 	public void run() {
 		while(!stopped) {
+			if (player.testPerdu()) {
+				end();
+			}
 			try {
 				Thread.sleep(20); // application d'un delai entre chage retombé (permet une retombé progressive)
 			} catch (InterruptedException e) {

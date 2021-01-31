@@ -3,7 +3,7 @@ package main;
 
 
 import javax.swing.JFrame;
-
+import javax.swing.JOptionPane;
 
 import control.Control;
 import model.Avancer;
@@ -34,8 +34,18 @@ public class Main {
 		fenetre.addMouseListener(c); // permet de tenir au courant le programme lorsque la souris est cliquée	
 		fenetre.add(vue);
 		
+		
 		fenetre.pack();
-		fenetre.setVisible(true);	
+		fenetre.setVisible(true);
+		
+		// test si l'on a perdu et renvoie une fenetre avec le score
+		if (modele.testPerdu()) {
+			JOptionPane d = new JOptionPane();
+			d.showMessageDialog( fenetre, "Votre socre est : " + modele.getScore(), 
+			      "Tableau final", JOptionPane.INFORMATION_MESSAGE);
+			
+			
+		}
 	}
 
 }

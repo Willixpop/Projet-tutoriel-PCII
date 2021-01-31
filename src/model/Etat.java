@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Point;
+
 /** Cette classe represente la partie modèle avec l'etat des différents composant du projet*/
 
 public class Etat {
@@ -11,7 +13,7 @@ public class Etat {
 	private static int width = 20, height = 60;
 	
 	private static int JUMP = -15; // nombre de pixel a effectuer vers le haut lors d'un saut	
-	private static int GRAVITY = 2; // nombre de pixel à effectuer vers le bas lorsque l'anneau retombe
+	private static int GRAVITY = 1; // nombre de pixel à effectuer vers le bas lorsque l'anneau retombe
 	
 	public Parcours p; // prise en compte du parcours
 	
@@ -22,7 +24,7 @@ public class Etat {
 		x = initX;
 		y = initY;
 		
-		p = new Parcours(screenWidth,screenHeight, initX + width /2, yBound - height /2, JUMP, GRAVITY);
+		p = new Parcours(screenWidth,screenHeight, initX + width /2, initY - height /2, JUMP, GRAVITY);
 	}
 	
 	/** rend la constante y*/
@@ -47,15 +49,15 @@ public class Etat {
 	
 
 	/** Permet la gesdtion du comportement du joueur 
-	 * l'orsqu'il entre en contacte avec le bord de la fenêtre mais aussi l'éventuelle gravité
-	 * Cette fonction n'est pas encore definitive */
+	 * l'orsqu'il entre en contacte avec le bord de la fenêtre mais aussi l'éventuelle gravité */
 	public void move() {
 		y += dy;
 		dy += GRAVITY;
-		if (dy > 10)
+		if (dy >=10)
 			dy = 10;
 		if (y + height >= yBound) {
 			dy = 2;
+			
 			y = yBound - height;
 		}		
 		if(y <= 0)
@@ -72,4 +74,12 @@ public class Etat {
 		dy = JUMP;
 	}
 	
+	/** Fonction qui test si l'ovale entre en contact avec la ligne brisée*/
+	public boolean testPerdu() {
+		Point fstp = p.getParcours().get(0); // récupération du premier point de la courbe
+		Point sndp = p.getParcours().get(1); // récupération du second point de la courbe
+		float pente = (((sndp.y - fstp.y)/(sndp.x - fstp.x))); // calcul de la pente
+		float ycourbe = (pente * x)+(fstp.y - (pente * fstp.x)); // calcule de l'y sur la courbe
+		return (((y+height) <= ycourbe)  ||  (y >= ycourbe)); // test de la place de l'ovale sur la courbe et renvoie true si l'ovale n'est plis sur la courbe
+	}
 }

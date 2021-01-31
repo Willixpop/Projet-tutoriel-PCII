@@ -16,7 +16,7 @@ public class Parcours {
 	private static int dx = 5; // vitesse de deplacement de la position en x (en npmbre de pixel)
 	
 	public Parcours(int screenWidth, int screenHeight, int initX, int initY, int jump, int gravity) {
-		int xOld = initX;
+		int xOld = initX ;
 		int yOld = initY;
 		
 		xBound = screenWidth;

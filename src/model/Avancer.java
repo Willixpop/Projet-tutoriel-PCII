@@ -20,6 +20,9 @@ public class Avancer extends Thread{
 	@Override
 	public void run() {
 		while(!stopped) {
+			if (modele.testPerdu()) {
+				end();
+			}
 			modele.p.incrementPos(); // incrementation de la position du joueur
 			try {
 				Thread.sleep(200); // application d'un delai entre chaque actualisation de la position
